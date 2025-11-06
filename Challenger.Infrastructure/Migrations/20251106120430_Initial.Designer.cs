@@ -3,6 +3,7 @@ using System;
 using Challenger.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -11,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Challenger.Infrastructure.Migrations
 {
     [DbContext(typeof(CGContext))]
-    [Migration("20251001143242_Initial")]
+    [Migration("20251106120430_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -19,8 +20,10 @@ namespace Challenger.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.20")
+                .HasAnnotation("ProductVersion", "9.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
             modelBuilder.Entity("Challenger.Domain.Entities.Moto", b =>
                 {

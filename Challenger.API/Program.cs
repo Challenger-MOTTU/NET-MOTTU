@@ -1,8 +1,10 @@
 using System.Reflection;
 using Challenger.Application.Configss;
+using Challenger.Application.Services;
 using Challenger.Application.UseCase;
 using Challenger.Application.UseCase.CreateMoto;
 using Challenger.Application.UseCase.CreateUser;
+using Challenger.Application.UseCase.Login;
 using Challenger.Application.UseCase.UpdateUser;
 using Challenger.Infrastructure;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -20,6 +22,7 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddSingleton(configs);
+        builder.Services.AddSingleton(configs.Jwt);
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -34,10 +37,14 @@ public class Program
         builder.Services.AddScoped<IUpdateMotoUseCase, UpdateMotoUseCase>();
         builder.Services.AddScoped<ICreateUserUseCase, CreateUserUseCase>();
         builder.Services.AddScoped<IUpdateUserUseCase, UpdateUserUseCase>();
+        builder.Services.AddScoped<ILoginUseCase, LoginUseCase>();
+        builder.Services.AddScoped<ITokenService, TokenService>();
         
         builder.Services.AddHealthServices(builder.Configuration);
 
         builder.Services.AddVersioning();
+        
+        builder.Services.AddVerifyJwt(configs.Jwt);
         
         var app = builder.Build();
 
@@ -57,6 +64,8 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseAuthentication();
+        
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>

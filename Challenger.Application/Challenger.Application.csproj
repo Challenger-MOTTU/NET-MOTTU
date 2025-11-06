@@ -13,6 +13,13 @@
     <ItemGroup>
       <PackageReference Include="FluentValidation" Version="12.1.0" />
       <PackageReference Include="Microsoft.OpenApi" Version="1.6.14" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Identity">
+        <HintPath>..\..\..\..\..\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\8.0.16\ref\net8.0\Microsoft.AspNetCore.Identity.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

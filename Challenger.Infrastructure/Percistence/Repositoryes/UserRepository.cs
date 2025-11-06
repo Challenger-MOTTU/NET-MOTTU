@@ -17,6 +17,17 @@ public class UserRepository: Repository<User>, IUserRepository
     {
         _context = context;
     }
+    
+    public async Task<User?> GetByEmailAsync(string email)
+    {
+        
+        var user = _context.Users
+            .AsEnumerable()
+            .FirstOrDefault(u => u.Email.Valor == email);
+        
+        return user;
+    }
+    
     public async Task<PaginatedResult<UserSummary>> GetPageAsync(PageRequest page, UserQuery? filter = null, CancellationToken ct = default)
     {
         page.EnsureValid();

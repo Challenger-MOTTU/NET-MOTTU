@@ -7,7 +7,6 @@ public static class HealthExtentions
         services
             .AddHealthChecks()
             .AddMySql(configuration.GetConnectionString("MotoGridDB"), name: "MotoGridDB")
-            .AddMongoDb()
             .AddUrlGroup(new Uri("https://fiap.com.br"), "FIAP")
             .AddUrlGroup(new Uri("https://viacep.com.br/"), name: "VIA CEP");
         

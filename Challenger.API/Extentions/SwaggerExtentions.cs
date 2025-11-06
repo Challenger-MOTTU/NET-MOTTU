@@ -28,6 +28,29 @@ public static class SwaggerExtentions
 
 
            swagger.EnableAnnotations();
+           swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+           {
+               Name = "Authorization",
+               Description = "Please insert JWT with Bearer into field",
+               In = ParameterLocation.Header,
+               Type = SecuritySchemeType.ApiKey,
+               Scheme = "Bearer",
+           });
+                
+           swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
+           {
+               {
+                   new OpenApiSecurityScheme
+                   {
+                       Reference = new OpenApiReference
+                       {
+                           Type = ReferenceType.SecurityScheme,
+                           Id = "Bearer"
+                       }
+                   },
+                   []
+               }
+           });
         });
         return services;
     }    

@@ -1,14 +1,20 @@
 using System.Net;
+using Asp.Versioning;
 using Challenger.Application.DTOs.Requests;
 using Challenger.Application.DTOs.Responses;
 using Challenger.Application.pagination;
 using Challenger.Application.UseCase;
 using Microsoft.AspNetCore.Mvc;
 using Challenger.Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+
 namespace WebApplication2.Controllers
 {
+    [Authorize]
     /// <inheritdoc />
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}[controller]")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
     [ApiController]
     public class MotoController(
         ICreateMotoUseCase createMotoUseCase,
