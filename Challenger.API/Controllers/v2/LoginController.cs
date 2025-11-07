@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using LoginRequest = Challenger.Application.DTOs.Requests.LoginRequest;
 
 [Route("api/v{version:apiVersion}/login")]
 [ApiController]

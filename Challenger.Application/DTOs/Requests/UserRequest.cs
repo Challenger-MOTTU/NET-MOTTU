@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Challenger.Domain.Entities;
 
 namespace Challenger.Application.DTOs.Requests;
 

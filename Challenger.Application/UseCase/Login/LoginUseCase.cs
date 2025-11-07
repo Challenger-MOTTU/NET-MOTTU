@@ -1,7 +1,8 @@
-﻿using Challenger.Application.DTOs.Responses;
+﻿using Challenger.Application.DTOs.Requests;
+using Challenger.Application.DTOs.Responses;
 using Challenger.Application.Services;
 using Challenger.Domain.Interfaces;
-using Microsoft.AspNetCore.Identity.Data;
+
 
 namespace Challenger.Application.UseCase.Login;
 
