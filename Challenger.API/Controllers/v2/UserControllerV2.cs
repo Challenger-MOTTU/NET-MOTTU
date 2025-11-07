@@ -14,12 +14,15 @@ using Microsoft.EntityFrameworkCore;
 using Challenger.Domain.Entities;
 using Challenger.Domain.Interfaces;
 using Challenger.Infrastructure.Context;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace WebApplication2.Controllers
 {
    
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("2.0")]
+    [Produces("application/json")]
+    [SwaggerTag("User - CRUD operations")]
     [ApiController]
     public class UserControllerV2(
         ICreateUserUseCase createUserUseCase,
@@ -48,6 +51,9 @@ namespace WebApplication2.Controllers
         /// </remarks>
         /// 
         [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK, "Return all Users")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad request")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error")]
         public async Task<IEnumerable<UserResponse >> GetUsers()
         {
             var users = await userRepository.GetAllAsync();
@@ -60,6 +66,9 @@ namespace WebApplication2.Controllers
         }
 
         [HttpGet("paged")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Token returned")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad request")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error")]
         public Task<PaginatedResult<UserSummary>> GetPage([FromQuery] PageRequest pageRequest,
             [FromQuery] UserQuery userQuery)
         {
@@ -74,6 +83,9 @@ namespace WebApplication2.Controllers
         /// <param name="id">O ID do Usuario a ser consultado</param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Token returned")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad request")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error")]
         public async Task<ActionResult<UserResponse>> GetUser(Guid id)
         {
             var user = await userRepository.GetByIdAsync(id);
@@ -91,7 +103,8 @@ namespace WebApplication2.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [HttpPost]
-        [ProducesResponseType(typeof(UserResponse), (int)HttpStatusCode.Created)]
+        [SwaggerResponse(StatusCodes.Status200OK, "User Returned")]
+        [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK )]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<User>> PostUser(UserRequest request)

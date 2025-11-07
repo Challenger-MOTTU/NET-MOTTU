@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Asp.Versioning;
 using Challenger.Application.DTOs.Requests;
 using Challenger.Application.DTOs.Responses;
 using Challenger.Application.pagination;
@@ -13,11 +14,15 @@ using Microsoft.EntityFrameworkCore;
 using Challenger.Domain.Entities;
 using Challenger.Domain.Interfaces;
 using Challenger.Infrastructure.Context;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace WebApplication2.Controllers
 {
    
-    [Route("api/[controller]")]
+    [Route("api/v/{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+    [Produces("application/json")]
+    [SwaggerTag("User - CRUD operations")]
     [ApiController]
     public class UserController(
         ICreateUserUseCase createUserUseCase,
@@ -46,6 +51,9 @@ namespace WebApplication2.Controllers
         /// </remarks>
         /// 
         [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK, "Token returned")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad request")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error")]
         public async Task<IEnumerable<UserResponse >> GetUsers()
         {
             var users = await userRepository.GetAllAsync();
@@ -72,6 +80,9 @@ namespace WebApplication2.Controllers
         /// <param name="id">O ID do Usuario a ser consultado</param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Token returned")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad request")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error")]
         public async Task<ActionResult<UserResponse>> GetUser(Guid id)
         {
             var user = await userRepository.GetByIdAsync(id);
@@ -88,8 +99,10 @@ namespace WebApplication2.Controllers
         // POST: api/User
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [HttpPost]
-        [ProducesResponseType(typeof(UserResponse), (int)HttpStatusCode.Created)]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad request")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error")]
+        [SwaggerResponse(StatusCodes.Status200OK, "User Returned")]
+        [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK )]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<User>> PostUser(UserRequest request)

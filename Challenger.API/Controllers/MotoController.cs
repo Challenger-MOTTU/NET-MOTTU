@@ -7,14 +7,15 @@ using Challenger.Application.UseCase;
 using Microsoft.AspNetCore.Mvc;
 using Challenger.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace WebApplication2.Controllers
 {
-    [Authorize]
     /// <inheritdoc />
     [Route("api/v{version:apiVersion}[controller]")]
     [ApiVersion("1.0")]
-    [ApiVersion("2.0")]
+    [Produces("application/json")]
+    [SwaggerTag("Moto - CRUD operations")]
     [ApiController]
     public class MotoController(
         ICreateMotoUseCase createMotoUseCase,
@@ -51,6 +52,10 @@ namespace WebApplication2.Controllers
         /// </remarks>
 
         [HttpGet]
+        [SwaggerOperation(Summary = "Get all yards", Description = "Returns a list of all yards")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Token returned")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad request")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error")]
         public async Task<IEnumerable<MotoResponse>> GetMotos()
         {
             var motos = await motoRepository.GetAllAsync();
@@ -61,6 +66,7 @@ namespace WebApplication2.Controllers
                 m.Status, 
                 m.PatioId
             ));
+            
         }
 
         [HttpGet("paged")]
@@ -154,7 +160,9 @@ namespace WebApplication2.Controllers
         ///     }
         /// </remarks>
         [HttpPost]
-        [ProducesResponseType(typeof(MotoResponse), (int)HttpStatusCode.Created)]
+        [SwaggerOperation(Summary = "Create new yard", Description = "Creates a new yard")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Moto Created")]
+        [ProducesResponseType(typeof(MotoResponse), StatusCodes.Status200OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<ActionResult<MotoResponse>> PostMoto(MotoRequest request)
