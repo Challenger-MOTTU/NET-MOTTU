@@ -1,7 +1,7 @@
 # 🚀 Projeto Challenger API (.NET)
 
 Este repositório contém a implementação de uma **API desenvolvida em .NET 8**, estruturada em camadas de acordo com princípios de **Domain-Driven Design (DDD)**.  
-O projeto foi criado como parte do CP4 com objetivo de aplicar boas práticas de desenvolvimento, versionamento e arquitetura de software.
+O projeto foi criado como parte da Sprint 4 com objetivo de aplicar boas práticas de desenvolvimento, versionamento e arquitetura de software.
 
 ---
 
